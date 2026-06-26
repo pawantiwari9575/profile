@@ -934,17 +934,12 @@
         min-height: auto;
         display: grid;
         gap: 12px;
-        padding-top: 260px;
+        padding-top: 0;
       }
 
-      .orbit {
-        inset: 8px 0 auto;
-        height: 330px;
-        transform: rotateX(61deg) rotateZ(-17deg) scale(0.78);
-      }
-
+      .orbit,
       .core {
-        width: min(260px, 74vw);
+        display: none;
       }
 
       .panel {

@@ -5,6 +5,8 @@ const canvas = document.querySelector("#universe");
     const navLinks = [...document.querySelectorAll(".nav a")];
     const counter = document.querySelector("[data-counter]");
     const reveals = [...document.querySelectorAll(".reveal")];
+    const experienceBaseValue = 4.7;
+    const experienceStartDate = new Date("2026-06-01T00:00:00");
     let targetX = 0.5;
     let targetY = 0.48;
     let mouseX = 0.5;
@@ -178,6 +180,14 @@ const canvas = document.querySelector("#universe");
       }
     }
 
+    function updateExperienceCounter() {
+      if (!counter) return;
+      const now = new Date();
+      const monthsDiff = (now.getFullYear() - experienceStartDate.getFullYear()) * 12 +
+        (now.getMonth() - experienceStartDate.getMonth());
+      counter.textContent = (experienceBaseValue + monthsDiff * 0.1).toFixed(1);
+    }
+
     function render(time) {
       resize();
       mouseX += (targetX - mouseX) * 0.07;
@@ -218,7 +228,7 @@ const canvas = document.querySelector("#universe");
 
       cursor.style.left = `${mouseX * window.innerWidth}px`;
       cursor.style.top = `${mouseY * window.innerHeight}px`;
-      counter.textContent = (4.6 + Math.sin(time * 0.0012) * 0.12).toFixed(1);
+      updateExperienceCounter();
       requestAnimationFrame(render);
     }
 
@@ -256,4 +266,6 @@ const canvas = document.querySelector("#universe");
     [...document.querySelectorAll("main > section[id]")].forEach((section) => sectionObserver.observe(section));
 
     resize();
+    updateExperienceCounter();
+    setInterval(updateExperienceCounter, 1000 * 60 * 60 * 24);
     requestAnimationFrame(render);
